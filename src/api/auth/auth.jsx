@@ -8,7 +8,7 @@ export async function createUser(
   confirmPassword,
   age,
   bio,
-  interests
+  interests,
 ) {
   const { data } = await axios.post('https://core-46ur.onrender.com/auth/sign-up', {
     first_name: firstName,
@@ -18,7 +18,7 @@ export async function createUser(
     confirm_password: confirmPassword,
     age,
     bio,
-    interests
+    interests,
   });
   return data;
 }
@@ -26,7 +26,7 @@ export async function createUser(
 export async function login(email, password) {
   const { data } = await axios.post('https://core-46ur.onrender.com/auth/sign-in', {
     email,
-    password
+    password,
   });
   return data;
 }
@@ -39,7 +39,7 @@ export async function updateUser(
   confirmPassword,
   age,
   bio,
-  interests
+  interests,
 ) {
   const { data } = await axios.post('https://core-46ur.onrender.com/', {
     first_name: firstName,
@@ -49,7 +49,7 @@ export async function updateUser(
     confirm_password: confirmPassword,
     age,
     bio,
-    interests
+    interests,
   });
   return data;
 }
