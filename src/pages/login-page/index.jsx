@@ -18,12 +18,13 @@ export function LoginPage() {
   };
 
   return (
-    <SimpleGrid columns={2} height="100vh">
+    <SimpleGrid columns={innerWidth < 800 ? 1 : 2} height="100vh">
       <Box
         bg="white"
         borderRadius="20px"
         mr={{ base: "0", lg: "40px" }}
-        pt="30%"
+        pt={innerWidth < 800 ? "70%" : "30%"}
+        h={innerWidth < 800 && "100vh"}
       >
         <Text
           fontSize={{ base: "50px", sm: "130px" }}
@@ -39,7 +40,7 @@ export function LoginPage() {
           </Text>
         </Center>
       </Box>
-      <VStack bg="pink.300">
+      <VStack bg="pink.300" h={innerWidth < 800 && "100vh"}>
         <Center mt={isLogin ? "35%" : "20%"}>
           <Box
             maxW="fit-content"
