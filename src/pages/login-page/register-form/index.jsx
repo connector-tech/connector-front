@@ -1,5 +1,5 @@
 import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
-import { useCreateUser, useLogin } from "../../../api/auth/auth-hooks";
+import { useCreateUser } from "../../../api/auth/auth-hooks";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
