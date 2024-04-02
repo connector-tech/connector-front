@@ -4,18 +4,37 @@ import { createUser, login } from "./auth";
 
 export function useCreateUser() {
   const navigate = useNavigate();
-  const { mutate, isSuccess } = useMutation(
+  const { mutate, isSuccess, data } = useMutation(
     ["createUser"],
-    ({ firstName, lastName, email, password, confirmPassword, age, bio, interests }) =>
-      createUser(firstName, lastName, email, password, confirmPassword, age, bio, interests),
+    ({
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      age,
+      bio,
+      interests,
+    }) =>
+      createUser(
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+        age,
+        bio,
+        interests,
+      ),
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
         navigate("/");
-      }
-    }
+        localStorage.setItem("token", data.data?.access_token);
+      },
+    },
   );
 
-  return { isSuccess, mutate };
+  return { isSuccess, mutate, data };
 }
 
 export function useLogin() {
@@ -24,10 +43,11 @@ export function useLogin() {
     ["loginUser"],
     ({ email, password }) => login(email, password),
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
         navigate("/");
-      }
-    }
+        localStorage.setItem("token", data.data?.access_token);
+      },
+    },
   );
 
   return { mutate, isSuccess, data };

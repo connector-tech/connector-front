@@ -1,4 +1,4 @@
-import { Button, FormControl, FormLabel, Input, Text } from "@chakra-ui/react";
+import { Button, FormControl, FormLabel, Input, Box } from "@chakra-ui/react";
 import { useLogin } from "../../../api/auth/auth-hooks";
 import { useState } from "react";
 import { redirect } from "react-router-dom";
@@ -11,7 +11,7 @@ export function LoginForm() {
   const onLogin = () => {
     login({
       email,
-      password
+      password,
     });
     if (isSuccess) {
       redirect("/");
