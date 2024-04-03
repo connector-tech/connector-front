@@ -11,8 +11,8 @@ export function MainPage() {
   }
   return (
     <Center mt="20">
-        <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['right', 'left']}>
-          <Card borderRadius="40px">
+        <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')}  flickOnSwipe>
+          <Card borderRadius="40px" bg="transparent">
           <CardBody>
             <Image
               w="sm"
