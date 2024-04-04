@@ -39,6 +39,22 @@ export function LoginPage() {
             Connect with people!
           </Text>
         </Center>
+        <div style={{ marginTop: "40%" }}>
+          <Text
+            display={{ base: "block", lg: "none" }}
+            color="pink.300"
+            fontSize={{ base: "20px", sm: "30px" }}
+          >
+            Find your soulmate now!
+          </Text>
+          <Text
+            display={{ base: "block", lg: "none" }}
+            color="pink.300"
+            fontSize={{ base: "40px", sm: "30px" }}
+          >
+            ↓
+          </Text>
+        </div>
       </Box>
       <VStack bg="pink.300" h={innerWidth < 800 && "100vh"}>
         <Center mt={isLogin ? "35%" : "20%"}>
