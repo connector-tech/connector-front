@@ -29,7 +29,7 @@ export function useCreateUser() {
     {
       onSuccess: (data) => {
         navigate("/");
-        localStorage.setItem("token", data.data?.access_token);
+        sessionStorage.setItem("token", data.data?.access_token);
       },
     },
   );
@@ -45,7 +45,7 @@ export function useLogin() {
     {
       onSuccess: (data) => {
         navigate("/");
-        localStorage.setItem("token", data.data?.access_token);
+        sessionStorage.setItem("token", data.data?.access_token);
       },
     },
   );
