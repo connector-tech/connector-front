@@ -28,8 +28,9 @@ export function useCreateUser() {
       ),
     {
       onSuccess: (data) => {
-        navigate("/");
         sessionStorage.setItem("token", data.data?.access_token);
+        navigate("/");
+        window.location.reload();
       },
     },
   );
@@ -44,8 +45,9 @@ export function useLogin() {
     ({ email, password }) => login(email, password),
     {
       onSuccess: (data) => {
-        navigate("/");
         sessionStorage.setItem("token", data.data?.access_token);
+        navigate("/");
+        window.location.reload();
       },
     },
   );

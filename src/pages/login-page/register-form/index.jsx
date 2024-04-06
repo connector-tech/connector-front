@@ -22,7 +22,7 @@ export function RegisterForm() {
       confirmPassword,
       age: 18,
       bio: "test",
-      interests: ["01f38b76-7d8a-450e-b833-cf0fcca88b2d"]
+      interests: ["01f38b76-7d8a-450e-b833-cf0fcca88b2d"],
     });
     if (isSuccess) {
       navigate("/");
@@ -43,9 +43,17 @@ export function RegisterForm() {
         placeholder="Enter Last name"
       />
       <FormLabel mt="10px">Email</FormLabel>
-      <Input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email" />
+      <Input
+        type="email"
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Enter Email"
+      />
       <FormLabel mt="10px">Age</FormLabel>
-      <Input type="number" onChange={(e) => setAge(e.target.value)} placeholder="Enter Age" />
+      <Input
+        type="number"
+        onChange={(e) => setAge(e.target.value)}
+        placeholder="Enter Age"
+      />
       <FormLabel mt="10px">Password</FormLabel>
       <Input
         type="password"

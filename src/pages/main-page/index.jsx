@@ -25,7 +25,6 @@ export function MainPage() {
               flickOnSwipe
               key={user.id}
               className="tinder-card"
-              styles={{ zIndex: `-${index}` }}
             >
               <Card
                 borderRadius="40px"
