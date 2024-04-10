@@ -15,7 +15,7 @@ export function MainPage() {
     console.log(myIdentifier + " left the screen");
   };
   return (
-    <Center height="100vh" overflow="hidden">
+    <Center height="90vh" overflow="hidden">
       <div className="tinder-cards">
         {data.data?.data?.items.map((user, index) => {
           return (

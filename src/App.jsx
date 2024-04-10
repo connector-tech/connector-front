@@ -1,11 +1,10 @@
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Box, Button, ChakraProvider, Icon } from "@chakra-ui/react";
-import { ChatPage, MainPage } from "./pages";
-import "./App.css";
-import { LoginPage } from "./pages/login-page";
+import { ChatPage, MainPage, SettingsPage, LoginPage } from "./pages";
 import PrivateRoutes from "./components/protected-routes";
 import { DragHandleIcon, EmailIcon, SettingsIcon } from "@chakra-ui/icons";
+import "./App.css";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +20,7 @@ export default function App() {
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<MainPage />} />
               <Route path="/chat" element={<ChatPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
             </Route>
           </Routes>
           {sessionStorage.getItem("token") && (
