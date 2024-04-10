@@ -8,7 +8,7 @@ export function ChatPage() {
           Узнать кто вас лайкнул 👀
         </Text>
       </Box>
-      <Box display="flex" gap="20px" overflow="hidden">
+      <Box display="flex" gap="20px" overflow="hidden" m="10px">
         <Card
           bgImage="https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
           bgRepeat="no-repeat"
@@ -38,6 +38,7 @@ export function ChatPage() {
           h="100px"
         />
       </Box>
+      <Box></Box>
     </Box>
   );
 }
