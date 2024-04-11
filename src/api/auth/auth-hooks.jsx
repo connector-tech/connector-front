@@ -15,6 +15,7 @@ export function useCreateUser() {
       age,
       bio,
       interests,
+      birthDate,
     }) =>
       createUser(
         firstName,
@@ -22,7 +23,7 @@ export function useCreateUser() {
         email,
         password,
         confirmPassword,
-        age,
+        birthDate,
         bio,
         interests,
       ),

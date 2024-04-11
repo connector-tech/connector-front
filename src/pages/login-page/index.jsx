@@ -56,10 +56,10 @@ export function LoginPage() {
           </Text>
         </div>
       </Box>
-      <VStack bg="pink.300" h={innerWidth < 800 && "100vh"}>
-        <Center mt={isLogin ? "35%" : "20%"}>
+      <VStack bg="pink.300" h={innerWidth < 800 && "full"}>
+        <Center mt={isLogin && innerWidth > 800 ? "35%" : "20%"}>
           <Box
-            maxW="fit-content"
+            maxW="350px"
             bg="white"
             p="20px"
             borderRadius="20px"
