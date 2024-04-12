@@ -16,6 +16,7 @@ export function useCreateUser() {
       bio,
       interests,
       birthDate,
+      gender,
     }) =>
       createUser(
         firstName,
@@ -26,6 +27,7 @@ export function useCreateUser() {
         birthDate,
         bio,
         interests,
+        gender,
       ),
     {
       onSuccess: (data) => {

@@ -9,6 +9,7 @@ export async function createUser(
   birthDate,
   bio,
   interests,
+  gender,
 ) {
   const { data } = await axios.post("http://18.153.84.68/auth/sign-up", {
     first_name: firstName,
@@ -19,6 +20,7 @@ export async function createUser(
     birth_date: birthDate,
     bio,
     interests,
+    gender,
   });
   return { data };
 }

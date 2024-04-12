@@ -5,6 +5,7 @@ import {
   FormLabel,
   Input,
   Radio,
+  RadioGroup,
   Stack,
   Textarea,
 } from "@chakra-ui/react";
@@ -30,6 +31,7 @@ export function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState();
   const [date, setDate] = useState();
   const [bio, setBio] = useState();
+  const [gender, setGender] = useState();
   const onSubmit = () => {
     mutate({
       firstName,
@@ -40,6 +42,7 @@ export function RegisterForm() {
       birthDate: format(date, "yyyy-MM-dd"),
       bio,
       interests,
+      gender,
     });
     if (isSuccess) {
       navigate("/");
@@ -71,12 +74,23 @@ export function RegisterForm() {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter Email"
       />
+      <FormLabel mt="10px">Gender</FormLabel>
+      <RadioGroup defaultValue="MALE" onChange={(e) => setGender(e)}>
+        <Stack spacing={5} direction="row">
+          <Radio colorScheme="blue" value="MALE">
+            Male
+          </Radio>
+          <Radio colorScheme="pink" value="FEMALE">
+            Female
+          </Radio>
+        </Stack>
+      </RadioGroup>
       <FormLabel mt="10px">Birth Date</FormLabel>
       <DayPicker
         mode="single"
         captionLayout="dropdown-buttons"
         fromYear={1975}
-        toYear={2003}
+        toYear={2024}
         onSelect={setDate}
       />
       <FormLabel mt="10px">Description</FormLabel>

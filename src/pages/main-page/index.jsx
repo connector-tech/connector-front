@@ -1,14 +1,35 @@
-import { Card, CardBody, Center, Text } from "@chakra-ui/react";
+import { useState } from "react";
+import {
+  Card,
+  CardBody,
+  Center,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
+  Text,
+} from "@chakra-ui/react";
+import ConfettiExplosion from "react-confetti-explosion";
+
 import TinderCard from "react-tinder-card";
 import { useUsers } from "../../api/users/users-hooks";
+import { useViewed } from "../../api/is-viewed/is-viewed-hooks";
 
 import "./styles.css";
 
 export function MainPage() {
   const { data } = useUsers();
+  const { mutate: liked, isSuccess } = useViewed();
+  const [isMatch, setIsMatch] = useState(false);
 
-  const onSwipe = (direction) => {
-    console.log("You swiped: " + direction);
+  const onSwipe = (direction, userId, isLiked) => {
+    if (direction === "right") {
+      if (isLiked) {
+        setIsMatch(true);
+      }
+      isLiked = true;
+      liked({ userId, isLiked });
+    }
   };
 
   const onCardLeftScreen = (myIdentifier) => {
@@ -16,11 +37,31 @@ export function MainPage() {
   };
   return (
     <Center height="90vh" overflow="hidden">
+      <Modal isOpen={isMatch} onClose={() => setIsMatch(false)}>
+        <ModalOverlay />
+        <ModalContent bgColor="transparent" shadow="none">
+          <ModalBody bgColor="transparent">
+            <Center mt="50%" bgColor="transparent" zIndex="5" display="block">
+              <Center>
+                <ConfettiExplosion zIndex="9999" duration={4000} />
+              </Center>
+              <Text
+                color="green.300"
+                fontSize="100px"
+                fontWeight="500"
+                fontStyle="italic"
+              >
+                MATCH
+              </Text>
+            </Center>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
       <div className="tinder-cards">
         {data.data?.data?.items.map((user, index) => {
           return (
             <TinderCard
-              onSwipe={onSwipe}
+              onSwipe={(e) => onSwipe(e, user.id, user.is_liked)}
               onCardLeftScreen={() => onCardLeftScreen("fooBar")}
               flickOnSwipe
               key={user.id}
