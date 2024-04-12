@@ -29,6 +29,9 @@ export function MainPage() {
       }
       isLiked = true;
       liked({ userId, isLiked });
+    } else {
+      isLiked = false;
+      liked({ userId, isLiked });
     }
   };
 
