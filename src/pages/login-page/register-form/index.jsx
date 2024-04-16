@@ -31,7 +31,7 @@ export function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState();
   const [date, setDate] = useState();
   const [bio, setBio] = useState();
-  const [gender, setGender] = useState();
+  const [gender, setGender] = useState("MALE");
   const onSubmit = () => {
     mutate({
       firstName,

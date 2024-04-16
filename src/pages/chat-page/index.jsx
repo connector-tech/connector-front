@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Avatar,
@@ -22,6 +22,15 @@ export function ChatPage() {
   const [isOpen, setIsOpen] = useState(false);
   const { data: matchedUsers } = useMatchedUsers();
 
+  useEffect(() => {
+    const webSocket = new WebSocket(
+      "wss://core-46ur.onrender.com/chats/ws/322cf31d-eb53-4be1-bfb8-bb2d9294725c/",
+    );
+    webSocket.onopen = () => {
+      console.log("Connected to WebSocket server");
+    };
+  }, []);
+
   return (
     <Box>
       <Box textAlign="left">
@@ -38,6 +47,7 @@ export function ChatPage() {
               bgSize="cover"
               w="100px"
               h="80px"
+              key={user.id}
             >
               <CardBody>
                 <Text fontWeight="500" color="white">
@@ -102,6 +112,7 @@ export function ChatPage() {
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
+
         <HStack
           borderTop="1px #E8E8E8 solid"
           pt="5"

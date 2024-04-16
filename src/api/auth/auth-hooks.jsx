@@ -1,9 +1,11 @@
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { createUser, login } from "./auth";
+import { Alert, AlertIcon, AlertTitle, useToast } from "@chakra-ui/react";
 
 export function useCreateUser() {
   const navigate = useNavigate();
+  const toast = useToast();
   const { mutate, isSuccess, data } = useMutation(
     ["createUser"],
     ({
@@ -34,6 +36,14 @@ export function useCreateUser() {
         sessionStorage.setItem("token", data.data?.access_token);
         navigate("/");
         window.location.reload();
+      },
+      onError: (error) => {
+        toast({
+          title: `${error}`,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
       },
     },
   );
