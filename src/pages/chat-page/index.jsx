@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Card,
+  CardBody,
   Drawer,
   DrawerBody,
   DrawerContent,
@@ -16,49 +17,40 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
+import { useMatchedUsers } from "../../api/users/users-hooks";
 export function ChatPage() {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: matchedUsers } = useMatchedUsers();
 
   return (
     <Box>
       <Box textAlign="left">
         <Text fontSize="25px" fontWeight="500" p="20px">
-          Ваши взаимные лайки ❤️
+          Your likes ❤️
         </Text>
       </Box>
       <Box display="flex" gap="20px" overflow="hidden" m="10px">
-        <Card
-          bgImage="https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
-          bgRepeat="no-repeat"
-          bgSize="cover"
-          w="100px"
-          h="80px"
-        />
-        <Card
-          bgImage="https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
-          bgRepeat="no-repeat"
-          bgSize="cover"
-          w="100px"
-          h="80px"
-        />
-        <Card
-          bgImage="https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
-          bgRepeat="no-repeat"
-          bgSize="cover"
-          w="100px"
-          h="80px"
-        />
-        <Card
-          bgImage="https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
-          bgRepeat="no-repeat"
-          bgSize="cover"
-          w="100px"
-          h="80px"
-        />
+        {matchedUsers.data?.data?.items.map((user) => {
+          return (
+            <Card
+              bgImage="https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
+              bgRepeat="no-repeat"
+              bgSize="cover"
+              w="100px"
+              h="80px"
+            >
+              <CardBody>
+                <Text fontWeight="500" color="white">
+                  {user.full_name}
+                </Text>
+              </CardBody>
+            </Card>
+          );
+        })}
       </Box>
       <Box textAlign="left">
         <Text fontSize="25px" fontWeight="500" p="20px">
-          Чат
+          Chat
         </Text>
       </Box>
       <Box>
@@ -68,7 +60,7 @@ export function ChatPage() {
               <Button onClick={() => setIsOpen(false)} bg="transparent">
                 <Icon as={ArrowLeftIcon} />{" "}
                 <Text fontWeight="500" ml="5">
-                  Назад
+                  Back
                 </Text>
               </Button>
               <Box mt="5">

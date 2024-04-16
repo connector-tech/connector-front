@@ -45,7 +45,7 @@ export function MainPage() {
         <ModalContent bgColor="transparent" shadow="none">
           <ModalBody bgColor="transparent">
             <Center mt="50%" bgColor="transparent" zIndex="5" display="block">
-              <Center>
+              <Center pl="5">
                 <ConfettiExplosion zIndex="9999" duration={4000} />
               </Center>
               <Text
@@ -74,7 +74,11 @@ export function MainPage() {
                 borderRadius="40px"
                 w="300px"
                 h="500px"
-                bgImage="https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
+                bgImage={
+                  user.photos !== null
+                    ? `https://core-46ur.onrender.com/media/${user.photos[0]}`
+                    : "https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
+                }
                 bgRepeat="no-repeat"
                 bgSize="cover"
               >

@@ -92,6 +92,7 @@ export function RegisterForm() {
         fromYear={1975}
         toYear={2024}
         onSelect={setDate}
+        selected={date}
       />
       <FormLabel mt="10px">Description</FormLabel>
       <Textarea
