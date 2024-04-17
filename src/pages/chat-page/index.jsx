@@ -102,7 +102,7 @@ export function ChatPage() {
                   </Text>
                 </HStack>
                 <Box mt="3">
-                  <Text>Привет красотка)</Text>
+                  <Text>Hello!</Text>
                 </Box>
               </Box>
             </DrawerBody>
@@ -125,7 +125,7 @@ export function ChatPage() {
               Dan Abramov
             </Text>
             <Text fontSize="17px" ml="20px">
-              Привет красотка)
+              Hello, this is test!
             </Text>
           </VStack>
         </HStack>

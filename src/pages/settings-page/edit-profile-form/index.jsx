@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Drawer,
   DrawerBody,
@@ -70,28 +71,30 @@ export default function EditProfileForm() {
               </Text>
             </Button>
             <EditForm />
-            <Input
-              type="file"
-              accept="image/*"
-              onChange={onUpload}
-              border="none"
-              mt="5"
-            />
 
-            {imagesPreviews.length !== 0 && (
-              <Splide aria-label="My Favorite Images">
-                {imagesPreviews.map((item) => {
-                  return (
-                    <SplideSlide>
-                      <Image src={item} key={item} w="auto" />
-                    </SplideSlide>
-                  );
-                })}
-              </Splide>
-            )}
-            <Button onClick={onSubmit} mt="5">
-              Upload photos
-            </Button>
+            <Box mb="40">
+              <Button onClick={onSubmit} mt="5">
+                Upload photos
+              </Button>
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={onUpload}
+                border="none"
+                mt="5"
+              />
+              {imagesPreviews.length !== 0 && (
+                <Splide aria-label="My Favorite Images">
+                  {imagesPreviews.map((item) => {
+                    return (
+                      <SplideSlide>
+                        <Image src={item} key={item} w="auto" />
+                      </SplideSlide>
+                    );
+                  })}
+                </Splide>
+              )}
+            </Box>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
