@@ -76,7 +76,7 @@ export function MainPage() {
                 h="500px"
                 bgImage={
                   user.photos.length !== 0
-                    ? `https://core-46ur.onrender.com/media/${user.photos[0]}`
+                    ? `https://connector-app-bucket.s3.eu-central-1.amazonaws.com${user.photos[0]}`
                     : "https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
                 }
                 bgRepeat="no-repeat"

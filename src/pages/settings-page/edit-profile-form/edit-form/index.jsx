@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
   Button,
   Checkbox,
   FormControl,
@@ -26,20 +29,25 @@ export default function EditForm() {
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
   const [bio, setBio] = useState();
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(" ");
+  const [error, setError] = useState(false);
 
   const onCheck = (interest) => {
     setInterestsList([...interestsList, interest]);
   };
 
   const onSubmit = () => {
-    mutate({
-      firstName,
-      lastName,
-      birthDate: format(date, "yyyy-MM-dd"),
-      bio,
-      interests: interestsList,
-    });
+    if (date !== " ") {
+      mutate({
+        firstName,
+        lastName,
+        birthDate: format(date, "yyyy-MM-dd"),
+        bio,
+        interests: interestsList,
+      });
+    } else {
+      setError(true);
+    }
   };
 
   return (
@@ -98,6 +106,7 @@ export default function EditForm() {
             mt="10 "
             mb="10"
             onClick={onSubmit}
+            disabled={date === " "}
           >
             Save Changes
           </Button>
@@ -110,6 +119,12 @@ export default function EditForm() {
           color="blue.500"
           size="xl"
         />
+      )}
+      {error && (
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle>Enter all required fields!</AlertTitle>
+        </Alert>
       )}
     </FormControl>
   );

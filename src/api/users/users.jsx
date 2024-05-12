@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function getUsers(size) {
-  const { data } = await axios.get("https://core-46ur.onrender.com/users", {
+  const { data } = await axios.get("https://api.connector-app.net/users", {
     headers: {
       token: sessionStorage.getItem("token"),
     },
@@ -11,7 +11,7 @@ export async function getUsers(size) {
 
 export async function getMatchedUsers() {
   const { data } = await axios.get(
-    "https://core-46ur.onrender.com/social/matches",
+    "https://api.connector-app.net/social/matches",
     {
       headers: {
         token: sessionStorage.getItem("token"),
@@ -22,7 +22,7 @@ export async function getMatchedUsers() {
 }
 
 export async function getMyUserInfo() {
-  const { data } = await axios.get("https://core-46ur.onrender.com/users/me", {
+  const { data } = await axios.get("https://api.connector-app.net/users/me", {
     headers: {
       token: sessionStorage.getItem("token"),
     },
@@ -32,7 +32,7 @@ export async function getMyUserInfo() {
 
 export async function uploadPhotos(photos) {
   const { data } = await axios.post(
-    "https://core-46ur.onrender.com/users/photos/upload",
+    "https://api.connector-app.net/users/photos/upload",
     {
       photos,
     },
@@ -54,7 +54,7 @@ export async function updateUser(
   interests,
 ) {
   const { data } = await axios.put(
-    "https://core-46ur.onrender.com/users/",
+    "https://api.connector-app.net/users/",
     {
       first_name: firstName,
       last_name: lastName,

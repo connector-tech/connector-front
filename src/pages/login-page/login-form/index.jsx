@@ -2,6 +2,7 @@ import { Button, FormControl, FormLabel, Input, Box } from "@chakra-ui/react";
 import { useLogin } from "../../../api/auth/auth-hooks";
 import { useState } from "react";
 import { redirect } from "react-router-dom";
+import Webcam from "react-webcam";
 
 export function LoginForm() {
   const { mutate: login, isSuccess } = useLogin();

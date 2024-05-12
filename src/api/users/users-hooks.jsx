@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   getMatchedUsers,
   getUsers,
@@ -6,9 +6,6 @@ import {
   uploadPhotos,
   updateUser,
 } from "./users";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { createUser } from "../auth/auth";
 
 export function useUsers(size) {
   const data = useQuery(["getUsers"], getUsers);
@@ -37,10 +34,16 @@ export function useUploadPhoto() {
 }
 
 export function useUpdateUser() {
+  const queryClient = useQueryClient();
   const { mutate, isSuccess, data } = useMutation(
     ["updateUser"],
     ({ firstName, lastName, birthDate, bio, interests }) =>
       updateUser(firstName, lastName, birthDate, bio, interests),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("getMyProfileInfo");
+      },
+    },
   );
 
   return { isSuccess, mutate };

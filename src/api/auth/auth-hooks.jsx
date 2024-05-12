@@ -1,7 +1,14 @@
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { createUser, login } from "./auth";
-import { Alert, AlertIcon, AlertTitle, useToast } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  tokenToCSSVar,
+  useToast,
+} from "@chakra-ui/react";
+import { jwtDecode } from "jwt-decode";
 
 export function useCreateUser() {
   const navigate = useNavigate();
@@ -34,6 +41,7 @@ export function useCreateUser() {
     {
       onSuccess: (data) => {
         sessionStorage.setItem("token", data.data?.access_token);
+        sessionStorage.setItem("user_id", jwtDecode(ata.data?.access_token));
         navigate("/");
         window.location.reload();
       },
@@ -59,6 +67,8 @@ export function useLogin() {
     {
       onSuccess: (data) => {
         sessionStorage.setItem("token", data.data?.access_token);
+        const decoded = jwtDecode(data.data?.access_token);
+        sessionStorage.setItem("user_id", decoded.user_id);
         navigate("/");
         window.location.reload();
       },
