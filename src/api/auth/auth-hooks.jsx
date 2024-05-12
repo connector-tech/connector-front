@@ -41,7 +41,7 @@ export function useCreateUser() {
     {
       onSuccess: (data) => {
         sessionStorage.setItem("token", data.data?.access_token);
-        sessionStorage.setItem("user_id", jwtDecode(ata.data?.access_token));
+        sessionStorage.setItem("user_id", jwtDecode(data.data?.access_token));
         navigate("/");
         window.location.reload();
       },

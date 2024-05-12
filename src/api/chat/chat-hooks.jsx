@@ -28,7 +28,7 @@ export function useChats() {
 }
 
 export function useChatsMessages(chatId) {
-  const { data, refetch } = useQuery(
+  const { data, refetch, isLoading } = useQuery(
     ["getChatsMessages"],
     () => getChatMessages(chatId),
     {

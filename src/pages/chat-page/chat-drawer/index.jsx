@@ -12,6 +12,8 @@ import {
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
+  ModalHeader,
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
@@ -19,6 +21,10 @@ import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { useMyProfileInfo } from "../../../api/users/users-hooks";
 import { useChatsMessages } from "../../../api/chat/chat-hooks";
+
+const ws = new WebSocket(
+  `wss://api.connector-app.net/ws/${sessionStorage.getItem("user_id")}`,
+);
 export function ChatDrawer({
   setIsOpen,
   isOpen,
@@ -26,90 +32,110 @@ export function ChatDrawer({
   receiverId,
   receiverAvatar,
   receiverName,
-  ws,
 }) {
   const { data: messages, refetch } = useChatsMessages(chatId);
   const [currentMessage, setCurrentMessage] = useState();
   const [currentMessages, setCurrentMessages] = useState([]);
 
   useEffect(() => {
-    setCurrentMessages([...currentMessages, messages?.data?.items]);
+    setCurrentMessages(messages?.data?.items.reverse());
+    console.log(currentMessages);
   }, []);
 
-  useEffect(() => {
-    console.log(currentMessages);
-  }, [currentMessages]);
-
-  ws.onopen = () => {
-    console.log(messages);
+  const onChange = (e) => {
+    setCurrentMessage(e.target.value);
   };
 
-  console.log(ws.readyState);
+  ws.onopen = () => {
+    console.log("connected!");
+  };
 
   ws.onerror = (event) => {
     console.log(event.data);
   };
 
+  ws.onmessage = (event) => {
+    refetch();
+    setCurrentMessages(messages?.data?.items.reverse());
+  };
   const onSendMessage = () => {
     const data = {
       chat_id: chatId,
       receiver_id: receiverId,
       text: currentMessage,
     };
-    currentMessages.push(data);
     ws.send(JSON.stringify(data));
     console.log("sended");
-  };
-
-  ws.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    console.log("wow");
     refetch();
-    currentMessages.push(data);
+    currentMessages?.push(data);
+    setCurrentMessage("");
   };
 
   return (
     <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} size="full">
       <ModalOverlay />
       <ModalContent>
-        <ModalBody>
+        <ModalHeader
+          top="0"
+          position="fixed"
+          bgColor="white"
+          zIndex="999"
+          w="100%"
+        >
           <Button onClick={() => setIsOpen(false)} bg="transparent">
             <Icon as={ArrowLeftIcon} />
             <Text fontWeight="500" ml="5">
               Back
             </Text>
           </Button>
-          <Box pb="100px">
-            {currentMessages.map((message, index) => {
+        </ModalHeader>
+        <ModalBody>
+          <Box pb="100px" pt="100px">
+            {messages?.data?.items.map((_, index) => {
               return (
                 <Box key={index}>
                   <HStack mt="5">
                     <Avatar
-                      name="Dan Abrahmov"
-                      src={`https://connector-app-bucket.s3.eu-central-1.amazonaws.com${receiverAvatar}`}
+                      src={
+                        messages?.data?.items[
+                          messages?.data?.items.length - 1 - index
+                        ].is_me
+                          ? "https://bit.ly/broken-link"
+                          : `https://connector-app-bucket.s3.eu-central-1.amazonaws.com${receiverAvatar}`
+                      }
                     />
                     <Text fontSize="17px" fontWeight="500">
-                      {message?.is_me}
+                      {messages?.data?.items[
+                        messages?.data?.items.length - 1 - index
+                      ]?.is_me
+                        ? "Ruslan"
+                        : receiverName}
                     </Text>
                   </HStack>
                   <Box mt="3">
-                    <Text>{message?.text}</Text>
+                    <Text>
+                      {
+                        messages?.data?.items[
+                          messages?.data?.items.length - 1 - index
+                        ]?.text
+                      }
+                    </Text>
                   </Box>
                 </Box>
               );
             })}
           </Box>
         </ModalBody>
-        <DrawerFooter bottom="0" position="fixed" bgColor="white">
+        <ModalFooter bottom="0" position="fixed" bgColor="white">
           <Input
             placeholder="Написать сообщение..."
-            onChange={(e) => setCurrentMessage(e.target.value)}
+            onChange={onChange}
             value={currentMessage}
           />
           <Button ml="3" onClick={onSendMessage}>
             Отправить
           </Button>
-        </DrawerFooter>
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );

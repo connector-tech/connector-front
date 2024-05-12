@@ -17,9 +17,6 @@ import { useCreateUser } from "../../api/auth/auth-hooks";
 import { useChats, useCreateChat } from "../../api/chat/chat-hooks";
 import { jwtDecode } from "jwt-decode";
 
-const ws = new WebSocket(
-  `wss://api.connector-app.net/ws/${sessionStorage.getItem("user_id")}`,
-);
 export function ChatPage() {
   const [isOpen, setIsOpen] = useState(false);
   const { data: matchedUsers } = useMatchedUsers();
@@ -88,7 +85,6 @@ export function ChatPage() {
                   <ChatDrawer
                     setIsOpen={setIsOpen}
                     isOpen={isOpen}
-                    ws={ws}
                     chatId={item?.id}
                     receiverId={item?.receiver?.id}
                     receiverAvatar={item?.receiver?.avatar}
