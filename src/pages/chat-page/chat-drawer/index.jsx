@@ -33,13 +33,18 @@ export function ChatDrawer({
   receiverAvatar,
   receiverName,
 }) {
-  const { data: messages, refetch } = useChatsMessages(chatId);
+  const { data: messages, refetch } = useChatsMessages(chatId, isOpen);
   const [currentMessage, setCurrentMessage] = useState();
   const [currentMessages, setCurrentMessages] = useState([]);
 
   useEffect(() => {
     setCurrentMessages(messages?.data?.items.reverse());
     console.log(currentMessages);
+
+    return () => {
+      setCurrentMessages([]);
+      ws.close();
+    };
   }, []);
 
   const onChange = (e) => {
@@ -58,6 +63,7 @@ export function ChatDrawer({
     refetch();
     setCurrentMessages(messages?.data?.items.reverse());
   };
+
   const onSendMessage = () => {
     const data = {
       chat_id: chatId,

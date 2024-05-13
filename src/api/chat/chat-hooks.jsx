@@ -27,7 +27,7 @@ export function useChats() {
   return { data };
 }
 
-export function useChatsMessages(chatId) {
+export function useChatsMessages(chatId, isOpen) {
   const { data, refetch, isLoading } = useQuery(
     ["getChatsMessages"],
     () => getChatMessages(chatId),
@@ -35,6 +35,7 @@ export function useChatsMessages(chatId) {
       onError: (error) => {
         alert(error);
       },
+      enabled: isOpen,
     },
   );
 

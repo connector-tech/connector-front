@@ -19,6 +19,7 @@ import { jwtDecode } from "jwt-decode";
 
 export function ChatPage() {
   const [isOpen, setIsOpen] = useState(false);
+  const [currentChat, setCurrentChat] = useState({});
   const { data: matchedUsers } = useMatchedUsers();
   const { data: chats } = useChats();
   const { data } = useMyProfileInfo();
@@ -30,6 +31,11 @@ export function ChatPage() {
     if (isSuccess) {
       setIsOpen(true);
     }
+  };
+
+  const onModalOpen = (item) => {
+    setCurrentChat(item);
+    setIsOpen(true);
   };
 
   return (
@@ -65,44 +71,47 @@ export function ChatPage() {
           Chat
         </Text>
       </Box>
-
+      <ChatDrawer
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+        chatId={currentChat.id}
+        receiverId={currentChat?.receiver?.id}
+        receiverAvatar={currentChat?.receiver?.avatar}
+        receiverName={currentChat?.receiver?.full_name}
+      />
       <Box>
-        <HStack
-          borderTop="1px #E8E8E8 solid"
-          pt="5"
-          pl="5"
-          onClick={() => setIsOpen(true)}
-        >
+        <Box borderTop="1px #E8E8E8 solid" pt="5" alignContent="left">
           {chats &&
             chats.data?.data?.items?.map((item, index) => {
               return (
-                <Box display="flex" gap="20px" key={index}>
+                <Box
+                  display="flex"
+                  gap="20px"
+                  key={index}
+                  mb="5"
+                  pl="5"
+                  pb="5"
+                  borderBottom="1px solid"
+                  onClick={() => onModalOpen(item)}
+                >
                   <Avatar
                     name="Dan Abrahmov"
                     src={`https://connector-app-bucket.s3.eu-central-1.amazonaws.com${item?.receiver?.avatar}`}
                   />
-
-                  <ChatDrawer
-                    setIsOpen={setIsOpen}
-                    isOpen={isOpen}
-                    chatId={item?.id}
-                    receiverId={item?.receiver?.id}
-                    receiverAvatar={item?.receiver?.avatar}
-                    receiverName={item?.receiver?.full_name}
-                  />
-
                   <VStack align="left">
                     <Text fontSize="17px" fontWeight="500" align="left">
                       {item.receiver?.full_name}
                     </Text>
                     <Text fontSize="17px" align="left">
-                      {item?.last_message === null && "Написать сообщение"}
+                      {item?.last_message === null
+                        ? "Написать сообщение"
+                        : item?.last_message}
                     </Text>
                   </VStack>
                 </Box>
               );
             })}
-        </HStack>
+        </Box>
       </Box>
     </Box>
   );
