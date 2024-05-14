@@ -10,15 +10,27 @@ import {
 import EditProfileForm from "./edit-profile-form";
 import { useMyProfileInfo } from "../../api/users/users-hooks";
 import TinderCard from "react-tinder-card";
+import { useEffect, useState } from "react";
 
 export function SettingsPage() {
   const { data } = useMyProfileInfo();
+  const [currentPhoto, setCurrentPhoto] = useState(0);
 
   const onLogout = () => {
     sessionStorage.clear();
     window.location.reload();
   };
 
+  const onChangePhoto = (len) => {
+    if (len !== 1) {
+      if (len - 1 === currentPhoto) {
+        console.log(len, currentPhoto);
+        setCurrentPhoto(0);
+      } else {
+        setCurrentPhoto(currentPhoto + 1);
+      }
+    }
+  };
   return (
     <Box p="5" style={{ zoom: `${window.innerWidth < 380 ? "60%" : "80%"}` }}>
       <Text fontSize="40" textAlign="left">
@@ -34,11 +46,12 @@ export function SettingsPage() {
               h="500px"
               bgImage={
                 data.data?.photos.length !== 0
-                  ? `https://connector-app-bucket.s3.eu-central-1.amazonaws.com${data.data?.photos[0]}`
+                  ? `https://connector-app-bucket.s3.eu-central-1.amazonaws.com${data.data?.photos[currentPhoto]}`
                   : "https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
               }
               bgRepeat="no-repeat"
               bgSize="cover"
+              onClick={() => onChangePhoto(data.data?.photos.length)}
             >
               <CardBody>
                 <div

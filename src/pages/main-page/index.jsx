@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Button,
   Card,
   CardBody,
   Center,
@@ -22,6 +23,7 @@ export function MainPage() {
   const { data } = useUsers();
   const { mutate: liked, isSuccess } = useViewed();
   const [isMatch, setIsMatch] = useState(false);
+  const [currentPhoto, setCurrentPhoto] = useState(0);
 
   const onSwipe = (direction, userId, isLiked) => {
     if (direction === "right") {
@@ -39,6 +41,18 @@ export function MainPage() {
   const onCardLeftScreen = (myIdentifier) => {
     console.log(myIdentifier + " left the screen");
   };
+
+  const onChangePhoto = (len) => {
+    console.log(len, currentPhoto);
+    if (len !== 1) {
+      if (len - 1 === currentPhoto) {
+        setCurrentPhoto(0);
+      } else {
+        setCurrentPhoto(currentPhoto + 1);
+      }
+    }
+  };
+
   return (
     <Center height="90vh" overflow="hidden">
       <Modal isOpen={isMatch} onClose={() => setIsMatch(false)}>
@@ -70,7 +84,8 @@ export function MainPage() {
                 onCardLeftScreen={() => onCardLeftScreen("fooBar")}
                 flickOnSwipe
                 key={user.id}
-                className="tinder-card"
+                className="pressable"
+                preventSwipe={["up", "down"]}
               >
                 <Card
                   borderRadius="40px"
@@ -78,13 +93,13 @@ export function MainPage() {
                   h="500px"
                   bgImage={
                     user.photos.length !== 0
-                      ? `https://connector-app-bucket.s3.eu-central-1.amazonaws.com${user.photos[0]}`
+                      ? `https://connector-app-bucket.s3.eu-central-1.amazonaws.com${user?.photos[currentPhoto]}`
                       : "https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
                   }
                   bgRepeat="no-repeat"
                   bgSize="cover"
                 >
-                  <CardBody>
+                  <CardBody onClick={() => onChangePhoto(user?.photos.length)}>
                     <div
                       style={{
                         position: "absolute",

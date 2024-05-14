@@ -56,7 +56,9 @@ export function ChatPage() {
                 minW="150px"
                 h="200px"
                 bgImage={
-                  "https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
+                  data.data?.photos.length !== 0
+                    ? `https://connector-app-bucket.s3.eu-central-1.amazonaws.com${user?.photos[0]}`
+                    : "https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
                 }
                 bgRepeat="no-repeat"
                 bgSize="cover"
