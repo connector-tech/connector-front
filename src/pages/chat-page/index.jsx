@@ -7,6 +7,7 @@ import {
   Card,
   CardBody,
   HStack,
+  Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -45,30 +46,56 @@ export function ChatPage() {
           Your likes ❤️
         </Text>
       </Box>
-      <Box display="flex" gap="20px" overflow="hidden" m="10px">
-        {matchedUsers.data?.data?.items.map((user) => {
-          return (
-            <Card
-              bgImage="https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
-              bgRepeat="no-repeat"
-              bgSize="cover"
-              w="100px"
-              h="80px"
-              key={user.id}
-              onClick={() => onOpenFirstChat(user.id)}
-            >
-              <CardBody>
-                <Text fontWeight="500" color="white">
-                  {user.full_name}
-                </Text>
-              </CardBody>
-            </Card>
-          );
-        })}
-      </Box>
+      <Stack direction="row" overflowX="scroll" m="10px">
+        {matchedUsers.data?.data?.items.length > 0 ? (
+          matchedUsers.data?.data?.items.map((user) => {
+            return (
+              <Card
+                className="tinder-card"
+                borderRadius="20px"
+                minW="150px"
+                h="200px"
+                bgImage={
+                  "https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
+                }
+                bgRepeat="no-repeat"
+                bgSize="cover"
+                onClick={() => onOpenFirstChat(user?.id)}
+              >
+                <CardBody>
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "0",
+                      right: "0",
+                      left: "0",
+                      padding: "20px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "10px",
+                      }}
+                    >
+                      <Text color="white" fontSize="22px">
+                        {user?.full_name}
+                      </Text>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            );
+          })
+        ) : (
+          <Text ml="10px" fontWeight="500">
+            You don't have matches yet ;(
+          </Text>
+        )}
+      </Stack>
       <Box textAlign="left">
         <Text fontSize="25px" fontWeight="500" p="20px">
-          Chat
+          Chats
         </Text>
       </Box>
       <ChatDrawer
@@ -91,12 +118,13 @@ export function ChatPage() {
                   mb="5"
                   pl="5"
                   pb="5"
-                  borderBottom="1px solid"
+                  borderBottom="1px #E8E8E8 solid "
                   onClick={() => onModalOpen(item)}
                 >
                   <Avatar
                     name="Dan Abrahmov"
                     src={`https://connector-app-bucket.s3.eu-central-1.amazonaws.com${item?.receiver?.avatar}`}
+                    size="lg"
                   />
                   <VStack align="left">
                     <Text fontSize="17px" fontWeight="500" align="left">

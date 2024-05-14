@@ -62,6 +62,7 @@ export function LoginPage() {
             maxW="350px"
             bg="white"
             p="20px"
+            mb={{ base: "40%", lg: "0" }}
             borderRadius="20px"
             mt={{ base: "10%", lg: "10px" }}
           >

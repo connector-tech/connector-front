@@ -56,8 +56,6 @@ export default function EditProfileForm() {
     });
   };
 
-  const onSaveChanges = (info) => {};
-
   return (
     <>
       <Button onClick={onOpen}>Edit profile</Button>
@@ -70,8 +68,6 @@ export default function EditProfileForm() {
                 Back
               </Text>
             </Button>
-            <EditForm />
-
             <Box mb="40">
               <Button onClick={onSubmit} mt="5">
                 Upload photos
@@ -95,6 +91,7 @@ export default function EditProfileForm() {
                 </Splide>
               )}
             </Box>
+            <EditForm />
           </DrawerBody>
         </DrawerContent>
       </Drawer>

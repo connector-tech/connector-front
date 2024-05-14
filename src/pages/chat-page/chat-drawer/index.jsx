@@ -22,9 +22,6 @@ import { useEffect, useState } from "react";
 import { useMyProfileInfo } from "../../../api/users/users-hooks";
 import { useChatsMessages } from "../../../api/chat/chat-hooks";
 
-const ws = new WebSocket(
-  `wss://api.connector-app.net/ws/${sessionStorage.getItem("user_id")}`,
-);
 export function ChatDrawer({
   setIsOpen,
   isOpen,
@@ -34,34 +31,33 @@ export function ChatDrawer({
   receiverName,
 }) {
   const { data: messages, refetch } = useChatsMessages(chatId, isOpen);
-  const [currentMessage, setCurrentMessage] = useState();
+  const [currentMessage, setCurrentMessage] = useState("");
   const [currentMessages, setCurrentMessages] = useState([]);
+  const [ws, setWs] = useState(null);
 
   useEffect(() => {
     setCurrentMessages(messages?.data?.items.reverse());
     console.log(currentMessages);
+    const ws = new WebSocket(
+      `wss://api.connector-app.net/ws/${sessionStorage.getItem("user_id")}`,
+    );
+    ws.onopen = () => {
+      console.log("connected!");
+      setWs(ws);
+    };
+
+    ws.onmessage = (event) => {
+      refetch();
+      setCurrentMessages(messages?.data?.items.reverse());
+    };
 
     return () => {
-      setCurrentMessages([]);
-      ws.close();
+      ws.close(1000, console.log("closed"));
     };
   }, []);
 
   const onChange = (e) => {
     setCurrentMessage(e.target.value);
-  };
-
-  ws.onopen = () => {
-    console.log("connected!");
-  };
-
-  ws.onerror = (event) => {
-    console.log(event.data);
-  };
-
-  ws.onmessage = (event) => {
-    refetch();
-    setCurrentMessages(messages?.data?.items.reverse());
   };
 
   const onSendMessage = () => {
@@ -70,10 +66,11 @@ export function ChatDrawer({
       receiver_id: receiverId,
       text: currentMessage,
     };
-    ws.send(JSON.stringify(data));
+
     console.log("sended");
     refetch();
     currentMessages?.push(data);
+    ws.send(JSON.stringify(data));
     setCurrentMessage("");
   };
 

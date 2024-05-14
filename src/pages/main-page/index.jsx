@@ -8,6 +8,7 @@ import {
   ModalContent,
   ModalOverlay,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import ConfettiExplosion from "react-confetti-explosion";
 
@@ -61,58 +62,67 @@ export function MainPage() {
         </ModalContent>
       </Modal>
       <div className="tinder-cards">
-        {data.data?.data?.items.map((user, index) => {
-          return (
-            <TinderCard
-              onSwipe={(e) => onSwipe(e, user.id, user.is_liked)}
-              onCardLeftScreen={() => onCardLeftScreen("fooBar")}
-              flickOnSwipe
-              key={user.id}
-              className="tinder-card"
-            >
-              <Card
-                borderRadius="40px"
-                w="300px"
-                h="500px"
-                bgImage={
-                  user.photos.length !== 0
-                    ? `https://connector-app-bucket.s3.eu-central-1.amazonaws.com${user.photos[0]}`
-                    : "https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
-                }
-                bgRepeat="no-repeat"
-                bgSize="cover"
+        {data.data?.data?.items.length !== 0 ? (
+          data.data?.data?.items.map((user, index) => {
+            return (
+              <TinderCard
+                onSwipe={(e) => onSwipe(e, user.id, user.is_liked)}
+                onCardLeftScreen={() => onCardLeftScreen("fooBar")}
+                flickOnSwipe
+                key={user.id}
+                className="tinder-card"
               >
-                <CardBody>
-                  <div
-                    style={{
-                      position: "absolute",
-                      bottom: "0",
-                      right: "0",
-                      left: "0",
-                      padding: "20px",
-                    }}
-                  >
+                <Card
+                  borderRadius="40px"
+                  w="300px"
+                  h="500px"
+                  bgImage={
+                    user.photos.length !== 0
+                      ? `https://connector-app-bucket.s3.eu-central-1.amazonaws.com${user.photos[0]}`
+                      : "https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
+                  }
+                  bgRepeat="no-repeat"
+                  bgSize="cover"
+                >
+                  <CardBody>
                     <div
                       style={{
-                        display: "flex",
-                        gap: "10px",
+                        position: "absolute",
+                        bottom: "0",
+                        right: "0",
+                        left: "0",
+                        padding: "20px",
                       }}
                     >
-                      <Text color="white" fontSize="22px">
-                        {user.full_name}, 21
-                      </Text>
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "10px",
+                        }}
+                      >
+                        <Text color="white" fontSize="22px">
+                          {user.full_name}, {user.age}
+                        </Text>
+                      </div>
+                      <div style={{ display: "flex" }}>
+                        <Text color="white" fontSize="15px">
+                          {user.bio}
+                        </Text>
+                      </div>
                     </div>
-                    <div style={{ display: "flex" }}>
-                      <Text color="white" fontSize="15px">
-                        {user.bio}
-                      </Text>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </TinderCard>
-          );
-        })}
+                  </CardBody>
+                </Card>
+              </TinderCard>
+            );
+          })
+        ) : (
+          <Center>
+            <VStack>
+              <Text fontSize="150px">🥲</Text>
+              <Text fontWeight="500">There's no one left</Text>
+            </VStack>
+          </Center>
+        )}
       </div>
     </Center>
   );

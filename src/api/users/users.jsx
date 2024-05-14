@@ -11,7 +11,7 @@ export async function getUsers(size) {
 
 export async function getMatchedUsers() {
   const { data } = await axios.get(
-    "https://api.connector-app.net/social/matches",
+    "https://api.connector-app.net/social/matches/",
     {
       headers: {
         token: sessionStorage.getItem("token"),
