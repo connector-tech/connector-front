@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function getUsers(size) {
-  const { data } = await axios.get("https://api.connector-app.net/users", {
+  const { data } = await axios.get("https://api.connector-app.net/users/", {
     headers: {
       token: sessionStorage.getItem("token"),
     },
@@ -22,7 +22,7 @@ export async function getMatchedUsers() {
 }
 
 export async function getMyUserInfo() {
-  const { data } = await axios.get("https://api.connector-app.net/users/me", {
+  const { data } = await axios.get("https://api.connector-app.net/users/me/", {
     headers: {
       token: sessionStorage.getItem("token"),
     },
@@ -32,7 +32,7 @@ export async function getMyUserInfo() {
 
 export async function uploadPhotos(photos) {
   const { data } = await axios.post(
-    "https://api.connector-app.net/users/photos/upload",
+    "https://api.connector-app.net/users/photos/upload/",
     {
       photos,
     },

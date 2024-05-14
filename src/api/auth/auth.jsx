@@ -12,7 +12,7 @@ export async function createUser(
   gender,
 ) {
   const { data } = await axios.post(
-    "https://api.connector-app.net/auth/sign-up",
+    "https://api.connector-app.net/auth/sign-up/",
     {
       first_name: firstName,
       last_name: lastName,
@@ -30,7 +30,7 @@ export async function createUser(
 
 export async function login(email, password) {
   const { data } = await axios.post(
-    "https://api.connector-app.net/auth/sign-in",
+    "https://api.connector-app.net/auth/sign-in/",
     {
       email,
       password,

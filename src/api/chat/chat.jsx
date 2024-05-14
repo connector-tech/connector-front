@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function getChats() {
-  const { data } = await axios.get("https://api.connector-app.net/chats", {
+  const { data } = await axios.get("https://api.connector-app.net/chats/", {
     headers: {
       token: sessionStorage.getItem("token"),
     },
@@ -12,7 +12,7 @@ export async function getChats() {
 export async function getChatMessages(chatId) {
   console.log(chatId);
   const { data } = await axios.get(
-    `https://api.connector-app.net/chats/${chatId}/messages`,
+    `https://api.connector-app.net/chats/${chatId}/messages/`,
     {
       headers: {
         token: sessionStorage.getItem("token"),
