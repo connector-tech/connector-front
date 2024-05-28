@@ -1,28 +1,41 @@
 import {
+  Box,
   Button,
   Checkbox,
   FormControl,
   FormLabel,
   Input,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   Radio,
   RadioGroup,
   Stack,
   Textarea,
 } from "@chakra-ui/react";
 import { useCreateUser } from "../../../api/auth/auth-hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
 import "react-day-picker/dist/style.css";
 import { useInterests } from "../../../api/interests/interests-hooks";
+import {
+  usePostAnswer,
+  useQustionnaire,
+} from "../../../api/ questionnaire/questionnaire-hooks";
 
 export function RegisterForm() {
   const navigate = useNavigate();
 
   const { mutate, isSuccess } = useCreateUser();
   const { data } = useInterests();
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [questionsAnswer, setQuestionAnswer] = useState([]);
+  const [answers, setAnswers] = useState({});
+  const { data: questions } = useQustionnaire();
+  const { mutate: postAnswer } = usePostAnswer();
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
@@ -44,9 +57,13 @@ export function RegisterForm() {
       interests,
       gender,
     });
-    if (isSuccess) {
-      navigate("/");
-    }
+
+    setIsOpen(true);
+  };
+
+  const onSubmitAnswer = () => {
+    postAnswer(questionsAnswer);
+    navigate("/");
   };
 
   const onCheck = (interest) => {
@@ -54,8 +71,32 @@ export function RegisterForm() {
     console.log(interests);
   };
 
+  const onAnswerChange = (e, index, item) => {
+    if (!questionsAnswer.find((element) => element.id === item.id)) {
+      questionsAnswer[index] = { question_id: item.id, answer: e.target.value };
+    } else {
+      questionsAnswer.push({ question_id: item.id, answer: e.target.value });
+    }
+  };
+
   return (
     <FormControl>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <ModalOverlay />
+        <ModalContent p="10px">
+          {questions.data?.data.map((item, index) => {
+            return (
+              <Box mt="2">
+                <FormLabel>{item.question}</FormLabel>
+                <Textarea onChange={(e) => onAnswerChange(e, index, item)} />
+              </Box>
+            );
+          })}
+          <Button mt="10" onClick={onSubmitAnswer}>
+            Submit
+          </Button>
+        </ModalContent>
+      </Modal>
       <FormLabel>First Name</FormLabel>
       <Input
         type="text"

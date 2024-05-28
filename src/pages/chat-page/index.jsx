@@ -56,7 +56,7 @@ export function ChatPage() {
                 minW="150px"
                 h="200px"
                 bgImage={
-                  data.data?.photos.length !== 0
+                  user?.photos 
                     ? `https://connector-app-bucket.s3.eu-central-1.amazonaws.com${user?.photos[0]}`
                     : "https://img.freepik.com/free-photo/blurred-pop-abstract-background-pink_58702-1700.jpg"
                 }
@@ -134,7 +134,7 @@ export function ChatPage() {
                     </Text>
                     <Text fontSize="17px" align="left">
                       {item?.last_message === null
-                        ? "Написать сообщение"
+                        ? "Send message"
                         : item?.last_message}
                     </Text>
                   </VStack>

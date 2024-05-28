@@ -131,7 +131,7 @@ export function ChatDrawer({
         </ModalBody>
         <ModalFooter bottom="0" position="fixed" bgColor="white">
           <Input
-            placeholder="Написать сообщение..."
+            placeholder="Send message..."
             onChange={onChange}
             value={currentMessage}
           />
